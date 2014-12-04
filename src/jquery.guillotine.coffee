@@ -163,8 +163,11 @@ class Guillotine
   _wrap: (element) ->
     el = $(element)
 
+    # Use provided image dimensions
+    if @op.imageWidth and @op.imageHeight
+      [width, height] = [@op.imageWidth, @op.imageHeight]
     # Get image's real dimensions
-    if el.prop('tagName') is 'IMG'
+    else if el.prop('tagName') is 'IMG'
       # Helper image (full size image)
       # Note: Assumes that the target image is already loaded (or cached).
       img = document.createElement('img')
