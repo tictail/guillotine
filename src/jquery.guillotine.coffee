@@ -224,6 +224,7 @@ class Guillotine
     e.stopImmediatePropagation()
     @p = getCursorPosition(e)         # Cursor position before moving (dragging)
     @_bind()
+    @$el.trigger 'guillotineStartDrag'
 
 
   _bind: ->
@@ -234,7 +235,9 @@ class Guillotine
   _unbind: (e) =>
     @$document.off events.move, @_drag
     @$document.off events.stop, @_unbind  # Unbind this very function (handler)
-    @_trigger('drag') if e?
+    if e?
+      @_trigger('drag') if e?
+      @$el.trigger 'guillotineStopDrag'
 
 
   # Trigger event and/or call callback function

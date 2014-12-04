@@ -216,7 +216,8 @@
       e.preventDefault();
       e.stopImmediatePropagation();
       this.p = getCursorPosition(e);
-      return this._bind();
+      this._bind();
+      return this.$el.trigger('guillotineStartDrag');
     };
 
     Guillotine.prototype._bind = function() {
@@ -228,7 +229,10 @@
       this.$document.off(events.move, this._drag);
       this.$document.off(events.stop, this._unbind);
       if (e != null) {
-        return this._trigger('drag');
+        if (e != null) {
+          this._trigger('drag');
+        }
+        return this.$el.trigger('guillotineStopDrag');
       }
     };
 
